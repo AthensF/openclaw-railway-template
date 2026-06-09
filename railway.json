@@ -5,10 +5,11 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "bash /data/bootstrap-gbrain.sh > /data/gbrain-bootstrap.log 2>&1 & alphaclaw start > /data/alphaclaw.log 2>&1 & exec tail -f /dev/null",
     "numReplicas": 1,
     "sleepApplication": false,
     "restartPolicyType": "ON_FAILURE",
-    "restartPolicyMaxRetries": 10
+    "restartPolicyMaxRetries": 10,
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300
   }
 }

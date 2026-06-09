@@ -18,6 +18,14 @@ ENV ALPHACLAW_ROOT_DIR=/data
 
 RUN mkdir -p /data
 
+# Persist GBrain wiring without altering the runtime command: bake a (dangling at
+# build time) symlink onto PATH. The gbrain binary lives on the persistent /data
+# volume (/data/.bun/bin/gbrain); the volume is mounted at runtime, so this resolves
+# then. /usr/local/bin is already on PATH, so `gbrain` works on every fresh container
+# with no startup script. (GBRAIN_HOME=/data and embedding vars are set as Railway
+# service variables.)
+RUN ln -sf /data/.bun/bin/gbrain /usr/local/bin/gbrain
+
 EXPOSE 3000
 
 ENTRYPOINT ["/usr/bin/tini", "--"]
