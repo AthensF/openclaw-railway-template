@@ -5,7 +5,7 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "timeout 90 bash -x /data/bootstrap-gbrain.sh 2>&1; echo bootstrap_done_$?; exec alphaclaw start",
+    "startCommand": "bash /data/bootstrap-gbrain.sh > /data/gbrain-bootstrap.log 2>&1 & exec alphaclaw start",
     "numReplicas": 1,
     "sleepApplication": false,
     "restartPolicyType": "ON_FAILURE",
