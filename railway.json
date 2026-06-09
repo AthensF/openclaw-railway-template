@@ -5,9 +5,11 @@
     "dockerfilePath": "Dockerfile"
   },
   "deploy": {
-    "startCommand": "( echo ==OPENCLAW==; openclaw --version 2>&1; echo ==SYMLINKS==; ls -la /usr/local/bin/openclaw /usr/local/bin/gbrain 2>&1; readlink -f /usr/local/bin/gbrain 2>&1; echo ==ALPHACLAW==; timeout 150 alphaclaw start 2>&1 | head -100; echo ==GBRAIN==; timeout 30 gbrain --version 2>&1; echo ==DIAGDONE== ) > /data/diag.log 2>&1 & exec sleep infinity",
     "numReplicas": 1,
     "sleepApplication": false,
-    "restartPolicyType": "NEVER"
+    "restartPolicyType": "ON_FAILURE",
+    "restartPolicyMaxRetries": 10,
+    "healthcheckPath": "/health",
+    "healthcheckTimeout": 300
   }
 }
