@@ -23,8 +23,10 @@ RUN mkdir -p /data
 # volume (/data/.bun/bin/gbrain); the volume is mounted at runtime, so this resolves
 # then. /usr/local/bin is already on PATH, so `gbrain` works on every fresh container
 # with no startup script. (GBRAIN_HOME=/data and embedding vars are set as Railway
-# service variables.)
-RUN ln -sf /data/.bun/bin/gbrain /usr/local/bin/gbrain
+# service variables.) gbrain is a bun TS CLI (gbrain -> src/cli.ts) so it needs `bun`
+# on PATH too; bun also lives on the volume, so symlink it as well.
+RUN ln -sf /data/.bun/bin/gbrain /usr/local/bin/gbrain \
+ && ln -sf /data/.bun/bin/bun /usr/local/bin/bun
 
 EXPOSE 3000
 
