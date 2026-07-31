@@ -8,11 +8,11 @@ WORKDIR /app
 COPY package.json package-lock.json ./
 RUN npm ci --omit=dev --prefer-online && npm cache clean --force
 
-# Bake the openclaw binary into the image. alphaclaw 0.9.18 fatally requires it, and
+# Bake the openclaw binary into the image. alphaclaw fatally requires it, and
 # the transitive install via `npm ci` has proven non-reproducible (binary/curl going
 # missing at runtime). Install it explicitly, version-matched to alphaclaw's dep, and
 # fail the build loudly if it is not on PATH afterward (lands in /usr/local/bin).
-RUN npm install -g openclaw@2026.5.28 && command -v openclaw
+RUN npm install -g openclaw@2026.7.1 && command -v openclaw
 
 # Bake gbrain (the personal-knowledge brain CLI) into the IMAGE, not the volume.
 # It installs to /opt/bun (NOT /data) so the runtime volume mount can't mask it.
